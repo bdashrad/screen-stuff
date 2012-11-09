@@ -1,5 +1,4 @@
 # yes, we need a way to flush the file on disconnect; i don't know one
-# yes, that's flush is not atomic (but good enough for me)
 ssh shell.bdashrad.com "tail -n 10 /home/ec2-user/.irssi/fnotify; > /home/ec2-user/.irssi/fnotify; tail -f /home/ec2-user/.irssi/fnotify" |
 #	sed -u 's/[<@&]//g' |
 	sed -ru "
