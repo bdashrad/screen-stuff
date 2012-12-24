@@ -1,0 +1,85 @@
+# .screenrc by brad clark 2011
+
+# screen settings
+startup_message off # disable startup message
+setenv DISPLAY ':0' # set display variable to first x display
+vbell on # turn on visual bell
+msgwait 3 # keep screen messages on for 10 seconds
+defscrollback 10000 # set default scrollback lines
+multiuser on # enable multiple users to connect
+acladd watcher # screen name for second user to connect
+autodetach on # detach on hangup
+pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended." # emulate .logout message
+shell -$SHELL # run new shells as login shells
+
+# ssh agent support
+unsetenv SSH_AUTH_SOCK
+setenv SSH_AUTH_SOCK "$HOME/.screen/ssh-auth-sock.$HOSTNAME"
+
+# terminal settings
+term xterm-256color # enable full color
+#termcapinfo xterm "Co#256:AB=E[48;5;%dm:AF=E[38;5;%dm" # tell screen how to set colors
+#termcapinfo xterm-color "Co#256:AB=E[48;5;%dm:AF=E[38;5;%dm"
+#termcapinfo xterm-256color "Co#256:AB=E[48;5;%dm:AF=E[38;5;%dm"
+defbce "on" # erase with current bg color
+termcapinfo xterm ut # erase with current bg color
+attrcolor b ".I" # allow bold colors
+termcapinfo xterm*|rxvt* 'ti@:te@' # make pgup and pgdn work in xterm
+
+# tell screen that xterm can switch to dark background and has function keys.
+#termcapinfo xterm 'VR=\E[?5h:VN=\E[?5l'
+#termcapinfo xterm 'k1=\E[11~:k2=\E[12~:k3=\E[13~:k4=\E[14~'
+#termcapinfo xterm 'kh=\E[1~:kI=\E[2~:kD=\E[3~:kH=\E[4~:kP=\E[H:kN=\E[6~'
+
+# special xterm hardstatus: use the window title.
+#termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+#termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]1;screen\007'
+
+
+# caption/status lines
+#caption always "%n(%t)"
+hardstatus alwayslastline 
+#hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+backtick 1 60 60 /home/bdashrad/bin/get_uptime.sh
+backtick 5 10 10 /home/bdashrad/bin/get_load.sh
+backtick 10 999 999 hostname -f
+#backtick 2 60 60 /home/bdashrad/bin/get_cputemp.sh Core0
+#backtick 3 60 60 /home/bdashrad/bin/get_freemem.sh
+#backtick 4 60 60 /home/bdashrad/bin/get_freeswap.sh
+
+#hardstatus string "%H | %= %1` | %2`C | %3`/%4` | %c %d/%m/%Y"
+#hardstatus string "%H | %= %1` | %2`C | %c %d/%m/%Y"
+#hardstatus string "%H | %= %1` | %5`"
+hardstatus string "%1` | %5` %= %d/%m/%Y %C%a"
+
+caption always "%{= kw}%-w%{= BW}%n %t%{-}%+w %-= %10`"
+
+# extra key bindings
+
+#remove some stupid / dangerous key bindings
+bind k
+bind ^k
+bind .
+bind ^\
+bind \\
+bind ^h
+bind h
+#make them better
+bind 'K' kill
+bind 'I' login on
+bind 'O' login off
+bind '}' history
+
+# Prepend/append register [/] to the paste if ^a^] is pressed.
+# This lets me have autoindent mode in vi.
+register [ "\033:se noai\015a"
+register ] "\033:se ai\015a"
+bind ^] paste [.]
+
+shelltitle '$ |bash'
+
+screen 0
+select 0
+exec bin/screen-ssh-agent
+exec true
+source $HOME/.ssh/screen_agent
