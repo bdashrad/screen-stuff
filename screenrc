@@ -40,12 +40,12 @@ termcapinfo xterm*|rxvt* 'ti@:te@' # make pgup and pgdn work in xterm
 #caption always "%n(%t)"
 hardstatus alwayslastline 
 #hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
-backtick 1 60 60 /home/bdashrad/bin/get_uptime.sh
-backtick 5 10 10 /home/bdashrad/bin/get_load.sh
+backtick 1 60 60 $HOME/bin/get_uptime.sh
+backtick 5 10 10 $HOME/bin/get_load.sh
 backtick 10 999 999 hostname -f
-#backtick 2 60 60 /home/bdashrad/bin/get_cputemp.sh Core0
-#backtick 3 60 60 /home/bdashrad/bin/get_freemem.sh
-#backtick 4 60 60 /home/bdashrad/bin/get_freeswap.sh
+#backtick 2 60 60 $HOME/bin/get_cputemp.sh Core0
+#backtick 3 60 60 $HOME/bin/get_freemem.sh
+#backtick 4 60 60 $HOME/bin/get_freeswap.sh
 
 #hardstatus string "%H | %= %1` | %2`C | %3`/%4` | %c %d/%m/%Y"
 #hardstatus string "%H | %= %1` | %2`C | %c %d/%m/%Y"
